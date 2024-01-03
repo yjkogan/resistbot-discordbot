@@ -19,8 +19,8 @@ print(f"Config is\n RP_SCHEME: {RP_SCHEME}\n RP_NETLOCK: {RP_NETLOCK}\n RP_BASE_
 
 def handle_incoming_dm(request_json):
     channel_id = request_json.get("channelId")  # This is the DM with the User
-    is_dm = request_json.get("guildId") is not None  # This is None if it's a DM
-    author_id = request_json.get("author.id")
+    is_dm = request_json.get("guildId") is None  # This is None if it's a DM
+    author_id = request_json.get("author", {}).get("id")
 
     # Ignore messages from us, or if it's not a DM
     if author_id == DISCORD_BOT_ID or not is_dm:

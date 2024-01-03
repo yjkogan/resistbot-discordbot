@@ -13,7 +13,17 @@ This repo contains a flask about for forwarding messages we get via the websocke
 If you are also in that server, you should be able to DM the bot!
 
 ### Running the websocket listener
-TODO
+In the `resistbot-gateway-forwarder` directory
+
+1. `npm install`
+2. `cp .env.example .env`
+3. Fill in the `.env` file with the `DISCORD_TOKEN` (your app's bot's token) and your app's `DISCORD_APP_PUBLIC_KEY`
+3. [Install ngrok](https://ngrok.com/docs/getting-started/)
+4. Run `ngrok http 2997`
+5. `npm run build`
+6. `npm start`
+
+At this point you should be able to dm the bot!
 
 ### Running the flask application
 I've been developing on a machine where I can't mess around too much with local installs so I've just been killing and rebuilding the docker container.

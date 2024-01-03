@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+      "target": "es2017",
+      "skipLibCheck": true,
+      "inlineSources": true,
+      "inlineSourceMap": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "pretty": true,
+      "strict": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "forceConsistentCasingInFileNames": true,
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "allowJs": true,
+      "jsx": "react",
+      "noImplicitAny": false,
+      "suppressImplicitAnyIndexErrors": false,
+      "outDir": "build",
+      "lib": [
+        "dom",
+        "es2017"
+      ]
+    },
+    "compileOnSave": true,
+    "exclude": [
+      "node_modules",
+      "build",
+      "test",
+    ],
+    "include": [
+      "src"
+    ]
+  }
+  
