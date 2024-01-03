@@ -4,11 +4,11 @@ This repo contains a flask about for forwarding messages we get via the websocke
 ## Getting started
 1. Create a discord bot in the [developer portal](https://discord.com/developers/applications)
 2. Add it to a server
-  1. Visit the OAuth2 side-nav for your discord application
-  2. Select "URL Generator"
-  3. Check the "bot" scope
-  4. Copy the generated URL at the bottom and paste it into a new tab
-  5. Add the bot to the relevant server
+    1. Visit the OAuth2 side-nav for your discord application
+    2. Select "URL Generator"
+    3. Check the "bot" scope
+    4. Copy the generated URL at the bottom and paste it into a new tab
+    5. Add the bot to the relevant server
 
 If you are also in that server, you should be able to DM the bot!
 
