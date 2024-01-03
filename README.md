@@ -37,7 +37,7 @@ You can then hit the application on localhost:5555.
 To test out sending I've been loading the root page, opening the dev console, and then using JS fetch:
 
 ```javascript
-// The example body is
+// The example body is from the rapid pro test cases
 const rapidProChannel = 'whatevs';
 const toChannel = CHANNEL_ID_OF_YOUR_DM_WITH_THE_BOT;
 fetch('/rp-response', {
