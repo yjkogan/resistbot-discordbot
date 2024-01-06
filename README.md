@@ -12,7 +12,7 @@ This repo contains a flask about for forwarding messages we get via the websocke
 
 If you are also in that server, you should be able to DM the bot!
 
-### Running the websocket listener
+## Running the websocket listener
 In the `resistbot-gateway-forwarder` directory
 
 1. `npm install`
@@ -25,7 +25,17 @@ In the `resistbot-gateway-forwarder` directory
 
 At this point you should be able to dm the bot!
 
-### Running the flask application
+## Running the flask application
+### Flask Envars
+| Envar             | Description                                                                                                                                                                           | Required? | Default |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|---------|
+| DISCORD_BOT_ID    | The ID of your discord application.  Found under https://discord.com/developers/applications/$APPLICATION_ID/information                                                              | Yes       |         |
+| DISCORD_BOT_TOKEN | Your application's bot's token.  Found under https://discord.com/developers/applications/$APPLICATION_ID/bot You only get to see it once, so save it somewhere after you generate it. | Yes       |         |
+| RP_NETLOC         | The "netloc" for RapidPro, e.g. rapidpro.com                                                                                                                                          | Yes       |         |
+| RP_BASEPATH       | The base path for the RapidPro channel, e.g. /c/ds/bac782c2-1234-5678-9012-97887744f573/                                                                                              | Yes       |         |
+| RP_SCHEME         | Whether to use http or https                                                                                                                                                          | No        | https   |
+
+### Launching and testing
 I've been developing on a machine where I can't mess around too much with local installs so I've just been killing and rebuilding the docker container.
 
 ```sh

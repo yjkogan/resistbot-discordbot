@@ -9,13 +9,13 @@ UrlComponents = namedtuple(
 )
 
 RP_SCHEME = os.environ.get("RP_SCHEME", "https")
-RP_NETLOCK = os.environ.get("RP_NETLOC", "rapidprod.com")
+RP_NETLOC = os.environ.get("RP_NETLOC", "")
 RP_BASE_PATH = os.environ.get("RP_BASE_PATH", "")
 DISCORD_BOT_ID = os.environ.get("DISCORD_BOT_ID", "")
 DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
 # TODO: Throw runtime error if any of these are missing
 
-print(f"Config is\n RP_SCHEME: {RP_SCHEME}\n RP_NETLOCK: {RP_NETLOCK}\n RP_BASE_PATH: {RP_BASE_PATH}\n DISCORD_BOT_ID: {DISCORD_BOT_ID}\n DISCORD_BOT_TOKEN: {DISCORD_BOT_TOKEN}")
+print(f"Config is\n RP_SCHEME: {RP_SCHEME}\n RP_NETLOC: {RP_NETLOC}\n RP_BASE_PATH: {RP_BASE_PATH}\n DISCORD_BOT_ID: {DISCORD_BOT_ID}\n DISCORD_BOT_TOKEN: {DISCORD_BOT_TOKEN}")
 
 def handle_incoming_dm(request_json):
     channel_id = request_json.get("channelId")  # This is the DM with the User
@@ -122,7 +122,7 @@ def _get_url(path, query_params=None):
     return urlunparse(
         UrlComponents(
             scheme=RP_SCHEME,
-            netloc=RP_NETLOCK,
+            netloc=RP_NETLOC,
             query=urlencode(_query_params),
             url=urljoin(RP_BASE_PATH, path),
             fragment="",
