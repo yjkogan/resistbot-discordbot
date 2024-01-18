@@ -1,5 +1,3 @@
-import 'dotenv/config'
-
 import {Client, GatewayIntentBits, Partials, Events} from 'discord.js'
 import process from 'node:process'
 
@@ -16,7 +14,7 @@ const client = new Client({
 client.on(Events.MessageCreate, async (message) => {
     console.log('Got message', message);
     console.log('Got message JSON', message.toJSON());
-    fetch('http://localhost:5555/incoming-dm', {
+    fetch('http://flask-backend:5000/incoming-dm', {
         method: 'POST',
         body: JSON.stringify({
             ...message,
@@ -24,7 +22,7 @@ client.on(Events.MessageCreate, async (message) => {
         }),
         headers: {
             "Content-Type": "application/json",
-          },
+        },
     }).then((res) => {
         console.log('Got response', res)
     }).catch((e) => {
@@ -37,12 +35,12 @@ client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isButton()) return;
 
     // TODO: Disable the buttons in the original message probably
-    fetch('http://localhost:5555/incoming-interaction', {
+    fetch('http://flask-backend:5000/incoming-interaction', {
         method: 'POST',
         body: JSON.stringify(interaction),
         headers: {
             "Content-Type": "application/json",
-          },
+        },
     }).then((res) => {
         console.log('Got response to interaction', res)
     }).catch((e) => {
@@ -56,7 +54,7 @@ client.on('ready', async () => {
 })
 
 client
-    .login(process.env.DISCORD_TOKEN)
+    .login(process.env.DISCORD_BOT_TOKEN)
     .then(() => {
         console.log('Logged in')
     })

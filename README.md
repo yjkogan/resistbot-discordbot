@@ -12,39 +12,22 @@ This repo contains a flask about for forwarding messages we get via the websocke
 
 If you are also in that server, you should be able to DM the bot!
 
-## Running the websocket listener
-In the `resistbot-gateway-forwarder` directory
+## Running everything together with Docker Compose
+1. `cp .env.example .env`
+2. Fill in the `.env` file with:
+  a. `DISCORD_TOKEN` (your Discord application's bot's token)
+  b. `DISCORD_APP_ID` (you Discord application's ID)
+  c. `RP_NETLOCK` (the 'netloc' of RapiPro e.g. rapidpro.com)
+  d. `RP_BASEPATH`: The base path for the RapidPro channel, e.g. /c/ds/bac782c2-1234-5678-9012-97887744f573/
+  e. `RP_SCHEME`: https | http
+3. `docker compose up`
 
-1. `npm install`
-2. `cp .env.example .env`
-3. Fill in the `.env` file with the `DISCORD_TOKEN` (your app's bot's token) and your app's `DISCORD_APP_PUBLIC_KEY`
-3. [Install ngrok](https://ngrok.com/docs/getting-started/)
-4. Run `ngrok http 2997`
-5. `npm run build`
-6. `npm start`
+## Testing
+### Manual QA
 
-At this point you should be able to dm the bot!
+Once things are up and running, you can then hit the flask application on localhost:5555
 
-## Running the flask application
-### Flask Envars
-| Envar             | Description                                                                                                                                                                           | Required? | Default |
-|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|---------|
-| DISCORD_BOT_ID    | The ID of your discord application.  Found under https://discord.com/developers/applications/$APPLICATION_ID/information                                                              | Yes       |         |
-| DISCORD_BOT_TOKEN | Your application's bot's token.  Found under https://discord.com/developers/applications/$APPLICATION_ID/bot You only get to see it once, so save it somewhere after you generate it. | Yes       |         |
-| RP_NETLOC         | The "netloc" for RapidPro, e.g. rapidpro.com                                                                                                                                          | Yes       |         |
-| RP_BASEPATH       | The base path for the RapidPro channel, e.g. /c/ds/bac782c2-1234-5678-9012-97887744f573/                                                                                              | Yes       |         |
-| RP_SCHEME         | Whether to use http or https                                                                                                                                                          | No        | https   |
-
-### Launching and testing
-I've been developing on a machine where I can't mess around too much with local installs so I've just been killing and rebuilding the docker container.
-
-```sh
-docker ps --format json | jq '.ID' | xargs docker stop && docker build . --tag resistbot-flask && docker run -d -p 5555:5000 -e DISCORD_BOT_TOKEN=REDACTED -e DISCORD_BOT_ID=REDACTED resistbot-flask | xargs docker logs -f
-```
-
-You can then hit the application on localhost:5555.
-
-To test out sending I've been loading the root page, opening the dev console, and then using JS fetch:
+To test out sending messages to Discord, I've been loading the root page, opening the dev console, and then using JS fetch:
 
 ```javascript
 // The example body is from the rapid pro test cases

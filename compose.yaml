@@ -1,0 +1,21 @@
+services:
+  flask-backend:
+    build: resistbot-flask
+    ports:
+      - "5555:5000"
+    volumes:
+      - ./resistbot-flask:/python-docker
+    environment:
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      DISCORD_APP_ID: ${DISCORD_APP_ID}
+      RP_NETLOC: ${RP_NETLOC}
+      RP_BASEPATH: ${RP_BASEPATH}
+      RP_SCHEME: ${RP_SCHEME}
+  gateway-forwarder:
+    build:
+      context: ./resistbot-gateway-forwarder
+    command: "start"
+    volumes:
+      - ./resistbot-gateway-forwarder:/code
+    environment:
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}

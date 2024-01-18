@@ -10,12 +10,12 @@ UrlComponents = namedtuple(
 
 RP_SCHEME = os.environ.get("RP_SCHEME", "https")
 RP_NETLOC = os.environ.get("RP_NETLOC", "")
-RP_BASE_PATH = os.environ.get("RP_BASE_PATH", "")
-DISCORD_BOT_ID = os.environ.get("DISCORD_BOT_ID", "")
+RP_BASEPATH = os.environ.get("RP_BASEPATH", "")
+DISCORD_APP_ID = os.environ.get("DISCORD_APP_ID", "")
 DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
 # TODO: Throw runtime error if any of these are missing
 
-print(f"Config is\n RP_SCHEME: {RP_SCHEME}\n RP_NETLOC: {RP_NETLOC}\n RP_BASE_PATH: {RP_BASE_PATH}\n DISCORD_BOT_ID: {DISCORD_BOT_ID}\n DISCORD_BOT_TOKEN: {DISCORD_BOT_TOKEN}")
+print(f"Config is\n RP_SCHEME: {RP_SCHEME}\n RP_NETLOC: {RP_NETLOC}\n RP_BASEPATH: {RP_BASEPATH}\n DISCORD_APP_ID: {DISCORD_APP_ID}\n DISCORD_BOT_TOKEN: {DISCORD_BOT_TOKEN}")
 
 def handle_incoming_dm(request_json):
     channel_id = request_json.get("channelId")  # This is the DM with the User
@@ -23,7 +23,7 @@ def handle_incoming_dm(request_json):
     author_id = request_json.get("author", {}).get("id")
 
     # Ignore messages from us, or if it's not a DM
-    if author_id == DISCORD_BOT_ID or not is_dm:
+    if author_id == DISCORD_APP_ID or not is_dm:
         current_app.logger.info("Ignoring message from bot or not a DM")
         return
     # Do something to assert this is a DM
@@ -124,7 +124,7 @@ def _get_url(path, query_params=None):
             scheme=RP_SCHEME,
             netloc=RP_NETLOC,
             query=urlencode(_query_params),
-            url=urljoin(RP_BASE_PATH, path),
+            url=urljoin(RP_BASEPATH, path),
             fragment="",
             path="",
         )
