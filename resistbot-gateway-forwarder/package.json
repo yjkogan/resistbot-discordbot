@@ -12,10 +12,10 @@
   "license": "MIT",
   "dependencies": {
     "discord-api-types": "^0.37.67",
-    "discord.js": "^14.14.1"
+    "discord.js": "^14.14.1",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "prettier": "^3.1.1",
-    "typescript": "^5.3.3"
+    "prettier": "^3.1.1"
   }
 }

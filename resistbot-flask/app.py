@@ -18,7 +18,7 @@ def receive_incoming_interaction():
     handle_quick_response(request.json)
     return 'Accepted', 202
 
-@app.route('/rp-response', methods=['POST'])
+@app.route('/discord/rp/send', methods=['POST'])
 def receive_rp_response():
     handle_rp_response(request.json)
     return 'Accepted', 202
