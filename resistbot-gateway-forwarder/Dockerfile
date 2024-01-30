@@ -7,7 +7,6 @@ COPY package-lock.json package-lock.json
 
 RUN npm install
 
-COPY .env .env
 COPY tsconfig.json tsconfig.json
 COPY ./src ./src
 

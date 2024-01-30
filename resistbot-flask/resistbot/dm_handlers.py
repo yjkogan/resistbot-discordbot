@@ -2,7 +2,7 @@ from collections import namedtuple
 from flask import current_app
 import os
 import requests
-from urllib.parse import urlunparse, urlencode, urljoin
+from urllib.parse import urlunparse, urlencode
 
 UrlComponents = namedtuple(
     "UrlComponents", ["scheme", "netloc", "url", "path", "query", "fragment"]
@@ -42,7 +42,12 @@ def handle_incoming_dm(request_json):
     # Sending the channel_id as `from` should ensure rapidpro gives us the channel id back in the 'to' field
     url = _get_url("/receive", query_params)
     current_app.logger.info(f"sending to rp from handle_incoming_dm: {url}")
-    # requests.post(url)
+    response = requests.post(url)
+    current_app.logger.info(f'Response {response}')
+    if (response.ok):
+        current_app.logger.info(f'OK response: {response.text}')
+    else:
+        current_app.logger.info(f'Error {response.status_code}: {response.text}')
 
 
 def handle_quick_response(request_json):
@@ -60,7 +65,7 @@ def handle_quick_response(request_json):
         "text": quick_reply_selected
     })
     current_app.logger.info(f"sending to rp from handle_quick_response: {url}")
-    # requests.post(url)
+    requests.post(url)
     # TODO: We could store the interaction id here so that when rapidpro
     # sends us back a message we can have it as an interaction response
     # or interaction follow-up
@@ -99,13 +104,13 @@ def handle_rp_response(request_json):
         }
     )
     current_app.logger.info(f"discord sending result: {result}")
-    # requests.post(_get_url('/sent'), json={"id": message_id})
+    requests.post(_get_url('/sent'), json={"id": message_id})
     current_app.logger.info(f"sending to rp from handle_rp_response: {_get_url('/sent')}")
     if result.status_code != 200:
-        # requests.post(_get_url('/failed'), json={"id": message_id})
+        requests.post(_get_url('/failed'), json={"id": message_id})
         current_app.logger.info(f"sending to rp from handle_rp_response: {_get_url('/failed')}")
     else:
-        # requests.post(_get_url('/delivered'), json={"id": message_id})
+        requests.post(_get_url('/delivered'), json={"id": message_id})
         current_app.logger.info(f"sending to rp from handle_rp_response: {_get_url('/delivered')}")
 
 
@@ -124,8 +129,19 @@ def _get_url(path, query_params=None):
             scheme=RP_SCHEME,
             netloc=RP_NETLOC,
             query=urlencode(_query_params),
-            url=urljoin(RP_BASEPATH, path),
+            url=urljoin(RP_BASEPATH, path), # urljoin doesn't handle this
             fragment="",
             path="",
         )
     )
+
+def urljoin(*args):
+    '''
+    Small helper function that does the URL join that I actually need.
+    The one from urllib doesn't handle fragments like this correctly.
+    Source: https://stackoverflow.com/a/58037371
+    '''
+    from functools import reduce
+    def join_slash(a, b):
+        return a.rstrip('/') + '/' + b.lstrip('/')
+    return reduce(join_slash, args) if args else ''
