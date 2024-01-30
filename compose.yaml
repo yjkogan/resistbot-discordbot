@@ -14,7 +14,7 @@ services:
   gateway-forwarder:
     build:
       context: ./resistbot-gateway-forwarder
-    command: "start"
+    command: "npm start"
     volumes:
       - ./resistbot-gateway-forwarder:/code
     environment:

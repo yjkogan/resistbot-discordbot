@@ -85,15 +85,15 @@ def handle_rp_response(request_json):
     message_json = {
         "content": request_json.get("text", ""),
         "embeds": [_create_embed(url) for url in request_json.get("attachments", [])],
-        "components": [
-            {
-                "type": 1,
-                "components": [
-                    _create_button_component(qr)
-                    for qr in request_json.get("quick_replies", [])
-                ],
-            }
-        ],
+        # "components": [
+        #     {
+        #         "type": 1,
+        #         "components": [
+        #             _create_button_component(qr)
+        #             for qr in request_json.get("quick_replies", [])
+        #         ],
+        #     }
+        # ],
     }
 
     result = requests.post(
@@ -108,7 +108,7 @@ def handle_rp_response(request_json):
     current_app.logger.info(f"sending to rp from handle_rp_response: {_get_url('/sent')}")
     if result.status_code != 200:
         requests.post(_get_url('/failed'), json={"id": message_id})
-        current_app.logger.info(f"sending to rp from handle_rp_response: {_get_url('/failed')}")
+        current_app.logger.info(f"sending to rp from handle_rp_response: {_get_url('/failed')}", result.text)
     else:
         requests.post(_get_url('/delivered'), json={"id": message_id})
         current_app.logger.info(f"sending to rp from handle_rp_response: {_get_url('/delivered')}")
