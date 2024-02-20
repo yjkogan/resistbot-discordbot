@@ -1,21 +1,21 @@
 services:
-  flask-backend:
-    build: resistbot-flask
+  node-backend:
+    build:
+      context: ./resistbot-node-backend
     ports:
-      - "5555:5000"
-    volumes:
-      - ./resistbot-flask:/python-docker
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
       DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
       DISCORD_APP_ID: ${DISCORD_APP_ID}
       RP_NETLOC: ${RP_NETLOC}
       RP_BASEPATH: ${RP_BASEPATH}
       RP_SCHEME: ${RP_SCHEME}
+      BACKEND_PORT: ${BACKEND_PORT}
   gateway-forwarder:
     build:
       context: ./resistbot-gateway-forwarder
     command: "npm start"
-    volumes:
-      - ./resistbot-gateway-forwarder:/code
     environment:
       DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      BACKEND_URL: http://node-backend
+      BACKEND_PORT: ${BACKEND_PORT}

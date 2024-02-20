@@ -2,10 +2,14 @@
   "name": "resistbot-gateway-forwarder",
   "version": "0.1.0",
   "description": "Maintains a WS connection with discord and forwards relevant messages",
-  "main": "src/index.ts",
+  "main": "build/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "tsc && node build/index.js",
+    "start": "node build/index.js",
+    "dev": "tsc && dotenv -e ../.env node build/index.js",
+    "docker-build": "docker build . -t resistbot-gateway-forwarder",
+    "docker-run": "docker run -d --env-file ../.env -t resistbot-gateway-forwarder -d | xargs docker logs -f",
+    "docker-stop-all": "docker ps --format json | jq '.ID' | xargs docker stop",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,6 +20,8 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "prettier": "^3.1.1"
+    "dotenv-cli": "^7.3.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
   }
 }
