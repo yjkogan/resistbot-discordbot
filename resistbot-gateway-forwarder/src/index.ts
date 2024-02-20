@@ -14,7 +14,7 @@ const client = new Client({
 client.on(Events.MessageCreate, async (message) => {
     console.log('Got message', message);
     console.log('Got message JSON', message.toJSON());
-    fetch('http://flask-backend:5000/incoming-dm', {
+    fetch('http://localhost:5555/incoming-dm', {
         method: 'POST',
         body: JSON.stringify({
             ...message,
@@ -35,9 +35,13 @@ client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isButton()) return;
 
     // TODO: Disable the buttons in the original message probably
-    fetch('http://flask-backend:5000/incoming-interaction', {
+    fetch('http://localhost:5555/incoming-interaction', {
         method: 'POST',
-        body: JSON.stringify(interaction),
+        body: JSON.stringify(interaction, (key, value) =>
+            typeof value === 'bigint'
+                ? value.toString()
+                : value // return everything else unchanged
+        ),
         headers: {
             "Content-Type": "application/json",
         },
@@ -46,7 +50,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }).catch((e) => {
         console.error('Got error for interaction', e)
     });
-    interaction.reply({ content: 'Pong', ephemeral: true })
+    // interaction.reply({ content: 'Pong', ephemeral: true })
 })
 
 client.on('ready', async () => {
