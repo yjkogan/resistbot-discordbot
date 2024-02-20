@@ -13,5 +13,7 @@ services:
   gateway-forwarder:
     build:
       context: ./resistbot-gateway-forwarder
+    command: "start"
     environment:
       DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      BACKEND_URL: http://node-backend

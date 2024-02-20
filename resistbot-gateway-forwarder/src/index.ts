@@ -1,5 +1,6 @@
 import {Client, GatewayIntentBits, Partials, Events} from 'discord.js'
-import process from 'node:process'
+
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost';
 
 const client = new Client({
     intents: [
@@ -14,7 +15,7 @@ const client = new Client({
 client.on(Events.MessageCreate, async (message) => {
     console.log('Got message', message);
     console.log('Got message JSON', message.toJSON());
-    fetch('http://localhost:5555/incoming-dm', {
+    fetch(`${BACKEND_URL}:5555/incoming-dm`, {
         method: 'POST',
         body: JSON.stringify({
             ...message,
@@ -35,7 +36,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isButton()) return;
 
     // TODO: Disable the buttons in the original message probably
-    fetch('http://localhost:5555/incoming-interaction', {
+    fetch(`${BACKEND_URL}/incoming-interaction`, {
         method: 'POST',
         body: JSON.stringify(interaction, (key, value) =>
             typeof value === 'bigint'
