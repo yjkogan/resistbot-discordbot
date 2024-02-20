@@ -12,4 +12,4 @@ COPY ./src ./src
 
 RUN npm run build
 
-ENTRYPOINT [ "npm", "start" ]
+ENTRYPOINT [ "npm", "run", "start" ]

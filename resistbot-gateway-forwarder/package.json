@@ -2,7 +2,7 @@
   "name": "resistbot-gateway-forwarder",
   "version": "0.1.0",
   "description": "Maintains a WS connection with discord and forwards relevant messages",
-  "main": "src/index.ts",
+  "main": "build/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
