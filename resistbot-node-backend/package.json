@@ -6,7 +6,10 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "dotenv -e ../.env nodemon src/index.ts"
+    "dev": "dotenv -e ../.env nodemon src/index.ts",
+    "docker-build": "docker build . -t resistbot-node-backend",
+    "docker-run": "docker run -d --env-file ../.env -p 5555:5555 -t resistbot-node-backend | xargs docker logs -f",
+    "docker-stop-all": "docker ps --format json | jq '.ID' | xargs docker stop"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

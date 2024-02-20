@@ -5,8 +5,11 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "tsc && node build/index.js",
+    "start": "node build/index.js",
     "dev": "tsc && dotenv -e ../.env node build/index.js",
+    "docker-build": "docker build . -t resistbot-gateway-forwarder",
+    "docker-run": "docker run -d --env-file ../.env -t resistbot-gateway-forwarder -d | xargs docker logs -f",
+    "docker-stop-all": "docker ps --format json | jq '.ID' | xargs docker stop",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

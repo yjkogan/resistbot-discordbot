@@ -1,5 +1,5 @@
 import express from 'express';
-import { handleIncomingDM, handleQuickResponse, handleRapidProResponse } from './dm_handlers';
+import { handleIncomingDM, handleQuickResponse, handleRapidProResponse } from './dmHandlers';
 import logger from 'morgan';
 
 var app = express();
